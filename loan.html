@@ -1,0 +1,55 @@
+<!Doctype html>
+<html lang="is">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="input.css">
+    <title>Lánamál</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="validation.js"></script>
+</head>
+<body>
+    <header class="hbox">
+        <div class="vbox">
+            <h1>Lánamál</h1>
+            <nav class="links">
+                <a href="index.html">Heim</a>
+                <u>Lánareiknivél</u>
+                <a href="tax.html">Skattreiknivél</a>
+                <a href="situation.html">Sparnaðarreiknivél</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="controls loan">
+            <div class="control">
+                <label id="principalLabel"> Höfuðstóll</label>
+                <input id="principalInput" value="10000000" min="0" max="100000000" step="100000" inputmode="numeric"
+                    onkeypress="return validateInput(event, 0, 100000000)" oninput="principalInputChanged()">
+                <input id="principalSlider" type="range" value="10000000" min="0" max="100000000" step="100000"
+                    oninput="principalSliderChanged()">
+            </div>
+    
+            <div class="control">
+                <label id="interestLabel">0</label>
+                <input id="interestSlider" type="range" value="0.09" min="0" max="0.2" step="0.01"
+                    oninput="interestChanged()">
+            </div>
+    
+            <div class="control">
+                <label id="lengthLabel">0</label>
+                <input id="lengthSlider" type="range" value="15" min="1" max="40" step="1" oninput="lengthChanged()">
+            </div>
+        </div>
+        <canvas class="graph" id="myChart">My chart</canvas>
+    </div>
+        
+
+        <script await src="loan.js"></script>
+</body>
+
+</html>

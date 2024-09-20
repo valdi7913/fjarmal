@@ -1,0 +1,180 @@
+:root {
+    /* Colors */
+    --primary-blue: #002F6C;      /* Deep Blue */
+    --secondary-blue: #005B96;    /* Mid Blue */
+    --accent-blue: #0091D5;       /* Light Blue */
+    --background-blue: #E6F2FA;   /* Very Light Blue */
+    --neutral-blue: #F7FAFC;      /* Off-White/Grayish Blue */
+    --text-color: black;          /* Black */
+    /* Spacing */
+    --spacing-big: 32px;
+    --spacing-medium: 24px;
+    --spacing-small: 16px;
+    --spacing-tiny: 8px;
+
+    /* Text sizes */
+    --big-text: 32px;
+    --small-text:16px;
+
+    /* Max widths */
+    --max-width: 1200px;
+
+    /* Grid */
+    --columns: 4;
+    --gap: var(--spacing-small);
+    --column-width:calc(var(--max-width) / var(--columns) - var(--gap));
+
+}
+
+* {
+    margin: 0; 
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--text-color);
+}
+
+h1, h2, h3, h4 {
+    /* font-family: "Playfair Display", serif; */
+}
+
+h1 {
+    margin: var(--spacing-medium) 0;
+}
+
+nav {
+    margin: var(--spacing-small) 0;
+}
+
+body {
+    background-color: var(--background-blue);
+    color: var(--primary-blue);
+}
+
+header {
+    display: flex;
+    justify-items: center;
+    background-color: var(--neutral-blue);
+    margin-bottom: var(--spacing-medium);
+    border-bottom: solid 1px var(--primary-blue);
+}
+
+header * {
+    font-family: "Playfair Display", serif;
+    color: var(--primary-blue);
+}
+
+header nav a:hover {
+    color: var(--accent-blue);
+}
+
+a {
+    color: var(--secondary-blue);
+    text-decoration: none;
+    margin: var(--spacing-tiny) 0;
+}
+
+a:hover {
+    color: var(--accent-blue);
+}
+
+button {
+    background-color: var(--accent-blue);
+    color: var(--neutral-blue);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--secondary-blue);
+}
+
+footer {
+    background-color: var(--primary-blue);
+    color: var(--neutral-blue);
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    display:grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(var(--columns), var(--column-width));
+    grid-template-rows: repeat(4, 200px);
+    grid-template-areas: 
+        "loan graph graph graph"
+        "loan graph graph graph"
+        "situation graph graph graph"
+        "situation graph graph graph";
+    
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.controls {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: solid 1px var(--primary-blue);
+    padding: var(--spacing-small);
+    /* border-radius: var(--spacing-small); */
+}
+
+.loan {
+    grid-area: loan;
+    background-color: var(--accent-blue);
+    border-radius: var(--spacing-tiny);
+}
+.situation {
+    grid-area: situation;
+    background-color: var(--accent-blue);
+    border-radius: var(--spacing-tiny);
+}
+
+.partner {
+    grid-area: partner;
+    background-color: var(--accent-blue);
+    border-radius: var(--spacing-tiny);
+}
+
+.graph {
+    grid-area: graph;
+    background-color: var(--neutral-blue);
+    border-radius: var(--spacing-tiny);
+}
+
+.control {
+    display:flex;
+    flex-direction: column;
+    justify-items: start;
+}
+
+.chart-container {
+    position:relative;
+    height: 40vh;
+    width: 40vw;
+}
+
+#myChart {
+    border: solid 1px var(--accent-blue);
+}
+
+.vbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hbox {
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.currency:hover {
+    color: var(--secondary-blue);
+}
