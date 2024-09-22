@@ -1,5 +1,6 @@
 class Situation {
     constructor(currentSavings, currentIncome, currentCosts, yearlyROI, yearlyPromotion, loanRatio) {
+        hello
         this.currentSavings = currentSavings;
         this.currentIncome = currentIncome;
         this.currentCosts = currentCosts;
