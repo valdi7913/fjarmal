@@ -1,0 +1,27 @@
+{
+  "name": "fjarmal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "ejs src/views/heim.ejs -o dist/heim.html && ejs src/views/lán.ejs -o dist/lán.html && ejs src/views/sparnaður.ejs -o dist/sparnaður.html && ejs src/views/laun.ejs -o dist/laun.html",
+    "watch:html": "cross-env watch \"npm run build\" src/views",
+    "browser-sync": "browser-sync --index dist/heim.html --watch",
+    "dev": "concurrently \"npm run watch:html\" \"npm run browser-sync\"",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint '**/*.css'"
+  },
+  "author": "valdi7913",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.11.0",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "ejs": "^3.1.10",
+    "eslint": "^9.11.0",
+    "globals": "^15.9.0",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
+    "watch": "^0.13.0"
+  }
+}

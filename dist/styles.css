@@ -6,6 +6,7 @@
     --background-blue: #E6F2FA;   /* Very Light Blue */
     --neutral-blue: #F7FAFC;      /* Off-White/Grayish Blue */
     --text-color: black;          /* Black */
+
     /* Spacing */
     --spacing-big: 32px;
     --spacing-medium: 24px;
@@ -23,21 +24,16 @@
     --columns: 4;
     --gap: var(--spacing-small);
     --column-width:calc(var(--max-width) / var(--columns) - var(--gap));
-
 }
 
 * {
     margin: 0; 
     padding: 0;
-    font-family: "Roboto", sans-serif;
+    font-family: Roboto, sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     color: var(--text-color);
-}
-
-h1, h2, h3, h4 {
-    /* font-family: "Playfair Display", serif; */
 }
 
 h1 {
@@ -45,6 +41,7 @@ h1 {
 }
 
 nav {
+    width: 100%;
     margin: var(--spacing-small) 0;
 }
 
@@ -66,17 +63,28 @@ header * {
     color: var(--primary-blue);
 }
 
-header nav a:hover {
-    color: var(--accent-blue);
+header nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+} 
+
+nav ul li {
+    display:flex;
+    margin: 0 var(--spacing-small);
 }
 
-a {
+li a {
     color: var(--secondary-blue);
     text-decoration: none;
     margin: var(--spacing-tiny) 0;
 }
 
-a:hover {
+li a:hover {
+    color: var(--accent-blue);
+}
+
+header nav a:hover {
     color: var(--accent-blue);
 }
 
@@ -109,7 +117,6 @@ footer {
         "loan graph graph graph"
         "situation graph graph graph"
         "situation graph graph graph";
-    
     margin: 0 auto;
     max-width: 1200px;
 }
@@ -120,7 +127,6 @@ footer {
     justify-content: space-around;
     border: solid 1px var(--primary-blue);
     padding: var(--spacing-small);
-    /* border-radius: var(--spacing-small); */
 }
 
 .loan {
