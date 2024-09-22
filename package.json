@@ -6,11 +6,11 @@
   "scripts": {
     "build": "ejs src/views/heim.ejs -o dist/heim.html && ejs src/views/lán.ejs -o dist/lán.html && ejs src/views/sparnaður.ejs -o dist/sparnaður.html && ejs src/views/laun.ejs -o dist/laun.html",
     "watch:html": "cross-env watch \"npm run build\" src/views",
-    "browser-sync": "browser-sync --index dist/heim.html --watch",
+    "browser-sync": "browser-sync dist -w --index heim.html",
     "dev": "concurrently \"npm run watch:html\" \"npm run browser-sync\"",
     "lint:js": "eslint .",
     "lint:css": "stylelint '**/*.css'"
-  },
+  }, 
   "author": "valdi7913",
   "license": "ISC",
   "devDependencies": {
