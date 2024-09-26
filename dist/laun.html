@@ -1,9 +1,11 @@
 <!Doctype html>
 <html lang="is">
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="input.css">
     <title>Launamál</title>
@@ -11,18 +13,54 @@
     <script src="validation.js"></script>
 </head>
 
-<header>
-  <div><h2><a href="/heim.html">Home</a></h1></div>
-  <nav>
-    <ul>
-      <li><a href="/lán.html">Lán</a></li>
-      <li><a href="/laun.html">Laun</a></li>
-      <li><a href="/sparnaður.html">Sparnaður</a></li>
-    </ul>
-  </nav>
+<body>
+    <header>
+	<div class="container max-width">
+		<div class="home">
+			<a class="home-title" href="/heim.html">
+				Fjármál
+			</a>
+			<p class="subtext"> á mannamáli </p>
+		</div>
+		<nav class="nav">
+			<ul>
+				<li>
+					<a href="/lán.html">Lán</a>
+					<!-- <img class="icon" src="./img/bank.svg" alt="banki"> -->
+				</li>
+				<li>
+					<a href="/laun.html">Laun</a>
+					<!-- <img class="icon" src="./img/dollar.svg" alt="peningur"> -->
+				</li>
+				<li>
+					<a href="/sparnaður.html">Sparnaður</a>
+					<!-- <img class="icon" src="./img/wallet.svg" alt="veski"> -->
+				</li>
+			</ul>
+		</nav>
+	</div>
 </header>
 
 
-<h1> Velkomin á launahlutann </h1>
+    <h1> Velkomin á launahlutann </h1>
+
+    <section class="quote max-width">
+    <q class="quote-text"> 
+        Vextir eru áttunda undur veraldar. Sá sem skilur þá, hagnast á þeim. Sá sem gerir það ekki, borgar þá
+    </q>
+    <p class="quote-author"> - Albert Einstein</p>
+</section>
+    
+    <footer class="max-width">
+	<div class="footer-container">
+	<h3> Fjármál.is er smíðað af <a href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
+	<ul>
+		<li> Gmail: valdi7913@gmail.com </li>
+		<li> LinkedIn: <a>Valdimar Sverrisson</a></li>
+	</ul>
+	</div>
+</footer>
+
+</body>
 
 </html>
