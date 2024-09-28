@@ -15,12 +15,56 @@
 
 <body>
     <%- include('header') %>
+        <section class="max-width">
+            <h1> Launareiknivél </h1>
+            <div class="dashboard">
+                <div class="main-stat">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon white" src="./img/dollar.svg" />
+                        </div>
+                        <h3>Laun eftir skatt</h3>
+                    </div>
+                    <p class="currency" id="les"> 100.000 </p>
+                </div>
+                <div class="alt-stat">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon" src="./img/percent.svg" />
+                        </div>
+                        <h3>Borgað í skatt</h3>
+                    </div>
+                    <p class="currency" id="bis"> 100.000 </p>
+                </div>
+                <div class="graph-container">
+                    <div class="dashboard-subtitle">
+                        <img class="icon" src="" />
+                    </div>
+                    <canvas id="myChart"></canvas>
+                    <script src="tax.js"></script>
+                </div>
+                <div class="settings">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon" src="./img/settings.svg" />
+                        </div>
+                        <h3>Stillingar</h3>
+                    </div>
+                    <div class="settings-group">
+                        <label id="incomeLabel">Laun fyrir skatt</label>
+                        <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
+                            oninput="incomeChanged()">
+                    </div>
+                    <div class="settings-group">
+                        <label id="incomeLabel">Laun fyrir skatt</label>
+                        <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
+                            oninput="incomeChanged()">
+                    </div>
+                </div>
+        </section>
 
-    <h1> Velkomin á launahlutann </h1>
-
-    <%- include('quote') %>
-    
-    <%- include('footer') %>
+        <%- include('quote') %>
+            <%- include('footer') %>
 </body>
 
 </html>
