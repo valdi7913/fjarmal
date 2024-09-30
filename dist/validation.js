@@ -7,7 +7,6 @@ function validateInput(event, min, max) {
     //Check if input is in the correct range
     let value = parseInt(event.target.value);
     if( value <= min || max <= value) {
-        console.log("You stupid bastard")    
         return false;
     }
 
@@ -21,7 +20,7 @@ function formatNumberWithSeparators(num) {
 
     // Convert the string to a number for correct formatting
     const parsedNum = parseFloat(num);
-    console.log(parsedNum)
+    console.log(isNaN(parsedNum))
     if (isNaN(parsedNum)) return '';
 
     // Convert the number back to a string with Icelandic separators
