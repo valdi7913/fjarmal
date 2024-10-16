@@ -50,6 +50,16 @@ class DeathBond {
 		}
 		return data;
 	}
+
+	getTotalPaid() {
+		let length = this.interest_history.length
+		return parseInt(this.principal);
+	}
+
+	getTotalInterestPaid() {
+		let length = this.interest_history.length
+		return parseInt(this.interest_history[length-1]);
+	}
 };
 
 function zip(x, y) {
@@ -68,7 +78,6 @@ function zip(x, y) {
 const ctx = document.getElementById('myChart');
 
 //Inputs
-const principalLabel = document.getElementById('principalLabel');
 const principalInput = document.getElementById('principalInput');
 
 const interestInput = document.getElementById('interestInput');
@@ -76,8 +85,8 @@ const interestInput = document.getElementById('interestInput');
 const lengthInput = document.getElementById('lengthInput');
 
 //Stats
-const totalPayedLabel = document.getElementById("les");
-const interestPayed = document.getElementById("bis");
+const totalPaidLabel = document.getElementById("les");
+const interestPaid = document.getElementById("bis");
 
 let chart = plot();
 
@@ -87,10 +96,15 @@ function plot() {
 	let length = lengthInput.value;
 
 	let mortgage = new DeathBond(principal, interest, length);
-	mortgage.calculateLoan()
-	let principals = mortgage.getPlotablePrincipal()
-	let installments = mortgage.getPlotablePayment()
-	let interests = mortgage.getPlotableInterest()
+	mortgage.calculateLoan();
+	let principals = mortgage.getPlotablePrincipal();
+	let installments = mortgage.getPlotablePayment();
+	let interests = mortgage.getPlotableInterest();
+
+	totalPaidLabel.innerHTML = mortgage.getTotalPaid();
+	interestPaid.innerHTML = mortgage.getTotalInterestPaid();
+	console.log("")
+
 	return new Chart(ctx, {
 		type: 'line',
 		data: {
@@ -138,30 +152,13 @@ function plot() {
 	});
 }
 
-function principalChanged() {
-	console.log("Principal Input Changed")
-	console.log(principalInput.value.replaceAll("/./g l lu", ""));
-	chart.destroy()
-	chart = plot()
-}
-
-function interestChanged() {
-	console.log("interest Changed")
-	chart.destroy()
-	chart = plot()
-}
-
-function lengthChanged() {
-	console.log("Length Changed")
+function replot() {
 	chart.destroy()
 	chart = plot()
 }
 
 document.getElementById('principalInput').addEventListener('input', function(e) {
 	let input = e.target.value;
-
-	// Remove any non-numeric characters before reformatting
-	input = input.replace(/[^0-9,]/g, '');
 
 	// Format the number with Icelandic separators
 	const formattedInput = formatNumberWithSeparators(input);

@@ -41,71 +41,70 @@
 	</div>
 </header>
 
+	<section class="graph-section max-width">
+		<h1> Lánareiknivél </h1>
+		<div class="dashboard">
+			<div class="main-stat">
+				<div class="dashboard-subtitle">
+					<div class="icon-container">
+						<img class="icon white" src="./img/dollar.svg" />
+					</div>
+					<h3>Samtals borgað</h3>
+				</div>
+				<label class="currency" id="les"> 100.000 </label>
+			</div>
+			<div class="alt-stat">
+				<div class="dashboard-subtitle">
+					<div class="icon-container">
+						<img class="icon" src="./img/percent.svg" />
+					</div>
+					<h3>Borgað í vexti</h3>
+				</div>
+				<label class="currency" id="bis"> 100.000 </label>
+			</div>
+			<div class="graph-container">
+				<div class="dashboard-subtitle">
+					<img class="icon" src="" />
+				</div>
+				<canvas id="myChart"></canvas>
+				<script defer src="loan.js"></script>
+			</div>
+			<div class="settings">
+				<div class="dashboard-subtitle">
+					<div class="icon-container">
+						<img class="icon" src="./img/settings.svg" />
+					</div>
+					<h3>Stillingar</h3>
+				</div>
+				<div class="settings-group">
+					<label for="principalLabel" id="principalLabel">Höfuðstóll</label>
+					<br>
 
-		<section class="graph-section max-width">
-			<h1> Lánareiknivél </h1>
-			<div class="dashboard">
-				<div class="main-stat">
-					<div class="dashboard-subtitle">
-						<div class="icon-container">
-							<img class="icon white" src="./img/dollar.svg" />
-						</div>
-						<h3>Samtals borgað</h3>
+					<div class="input-group">
+					<input id="principalInput" type="number" value="600000" min="0" onkeypress="return validateInput(event, 0, 100000000)" inputmode="numeric" oninput="replot()">
+					<p>kr.</p>
 					</div>
-					<label class="currency" id="les"> 100.000 </label>
 				</div>
-				<div class="alt-stat">
-					<div class="dashboard-subtitle">
-						<div class="icon-container">
-							<img class="icon" src="./img/percent.svg" />
-						</div>
-						<h3>Borgað í vexti</h3>
+				<div class="settings-group">
+					<label for="interestLabel" id="interestLabel">Vextir</label>
+					<br>
+					<div class="input-group">
+						<input id="interestInput" type="number" value="10" min="0" max="100" onkeypress="return validateInput(event, 0, 100)" inputmode="numeric" oninput="replot()">
+						<p>%</p>
 					</div>
-					<label class="currency" id="bis"> 100.000 </label>
 				</div>
-				<div class="graph-container">
-					<div class="dashboard-subtitle">
-						<img class="icon" src="" />
+				<div class="settings-group">
+					<label for="lengthInput" id="lengthLabel">Lengd láns</label>
+					<br>
+					<div class="input-group">
+					<input id="lengthInput" type="number" value="25" min="1" max="40" step="1" onkeypress="return validateInput(event, 0, 40)" inputmode="numeric" oninput="replot()">
+					<p>ár</p>
 					</div>
-					<canvas id="myChart"></canvas>
-					<script defer src="loan.js"></script>
 				</div>
-				<div class="settings">
-					<div class="dashboard-subtitle">
-						<div class="icon-container">
-							<img class="icon" src="./img/settings.svg" />
-						</div>
-						<h3>Stillingar</h3>
-					</div>
-					<div class="settings-group">
-						<label for="principalLabel" id="principalLabel">Höfuðstóll</label>
-                        <br>
+			</div>
+	</section>
 
-                        <div class="input-group">
-						<input id="principalInput" type="number" value="600000" min="0" max="3000000" step="10000" onkeypress="return validateInput(event, 0, 100000000)" inputmode="numeric" oninput="principalChanged()">
-                        <p>kr.</p>
-                        </div>
-					</div>
-					<div class="settings-group">
-						<label for="interestLabel" id="interestLabel">Vextir</label>
-                        <br>
-                        <div class="input-group">
-                            <input id="interestInput" type="number" value="10" min="0" max="100" step="10000" onkeypress="return validateInput(event, 0, 100)" inputmode="numeric" oninput="interestChanged()">
-                            <p>%</p>
-                        </div>
-					</div>
-					<div class="settings-group">
-						<label for="lengthInput" id="lengthLabel">Lengd láns</label>
-                        <br>
-                        <div class="input-group">
-						<input id="lengthInput" type="number" value="25" min="1" max="40" step="1" onkeypress="return validateInput(event, 0, 40)" inputmode="numeric" oninput="lengthChanged()">
-                        <p>ár</p>
-                        </div>
-					</div>
-				</div>
-		</section>
-
-		<footer class="max-width">
+	<footer class="max-width">
 	<div class="footer-container">
 	<h3> Fjármál.is er smíðað af <a href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
 	<ul>
