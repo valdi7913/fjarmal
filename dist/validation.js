@@ -19,10 +19,10 @@ function formatNumberWithSeparators(num) {
     num = num.replace(/\./g, '').replace(/,/g, '');
 
     // Convert the string to a number for correct formatting
+    console.log(num)
     const parsedNum = parseFloat(num);
-    console.log(isNaN(parsedNum))
     if (isNaN(parsedNum)) return '';
 
     // Convert the number back to a string with Icelandic separators
-    return parsedNum.toLocaleString('de-DE').replace(/\./g, ',').replace(/,/g, '.');
+    return num.toLocaleString('de-DE').replace(/\./g, ',').replace(/,/g, '.');
 }
