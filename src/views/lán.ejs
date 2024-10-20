@@ -6,79 +6,84 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
 		rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css">
 	<link rel="stylesheet" href="input.css">
 	<title>Lánamál</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="validation.js"></script>
+	<script defer src="validation.js"></script>
+	<script defer src="grof.js"></script>
 </head>
 
 <body>
 	<%- include('header') %>
-	<section class="graph-section max-width">
-		<h1> Lánareiknivél </h1>
-		<div class="dashboard">
-			<div class="main-stat">
-				<div class="dashboard-subtitle">
-					<div class="icon-container">
-						<img class="icon white" src="./img/dollar.svg" />
+		<section class="graph-section max-width">
+			<h1> Lánareiknivél </h1>
+			<div class="dashboard">
+				<div class="main-stat">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon white" src="./img/dollar.svg" />
+						</div>
+						<h3>Samtals borgað</h3>
 					</div>
-					<h3>Samtals borgað</h3>
+					<label class="currency" id="les"> 100.000 </label>
 				</div>
-				<label class="currency" id="les"> 100.000 </label>
-			</div>
-			<div class="alt-stat">
-				<div class="dashboard-subtitle">
-					<div class="icon-container">
-						<img class="icon" src="./img/percent.svg" />
+				<div class="alt-stat">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon" src="./img/percent.svg" />
+						</div>
+						<h3>Borgað í vexti</h3>
 					</div>
-					<h3>Borgað í vexti</h3>
+					<label class="currency" id="bis"> 100.000 </label>
 				</div>
-				<label class="currency" id="bis"> 100.000 </label>
-			</div>
-			<div class="graph-container">
-				<div class="dashboard-subtitle">
-					<img class="icon" src="" />
-				</div>
-				<canvas id="myChart"></canvas>
-				<script defer src="loan.js"></script>
-			</div>
-			<div class="settings">
-				<div class="dashboard-subtitle">
-					<div class="icon-container">
-						<img class="icon" src="./img/settings.svg" />
+				<div class="graph-container">
+					<div class="dashboard-subtitle">
+						<img class="icon" src="" />
 					</div>
-					<h3>Stillingar</h3>
+					<canvas id="myChart" width="100%" height="100%"></canvas>
+					<script defer src="loan.js"></script>
 				</div>
-				<div class="settings-group">
-					<label for="principalLabel" id="principalLabel">Höfuðstóll</label>
-					<br>
+				<div class="settings">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon" src="./img/settings.svg" />
+						</div>
+						<h3>Stillingar</h3>
+					</div>
+					<div class="settings-group">
+						<label for="principalLabel" id="principalLabel">Höfuðstóll</label>
+						<br>
 
-					<div class="input-group">
-					<input id="principalInput" type="number" value="600000" min="0" onkeypress="return validateInput(event, 0, 100000000)" inputmode="numeric" oninput="replot()">
-					<p>kr.</p>
+						<div class="input-group">
+							<input id="principalInput" type="number" value="600000" min="0"
+								onkeypress="return validateInput(event, 0, 100000000)" inputmode="numeric"
+								oninput="plot()">
+							<p>kr.</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label for="interestLabel" id="interestLabel">Vextir</label>
+						<br>
+						<div class="input-group">
+							<input id="interestInput" type="number" value="10" min="0" max="100"
+								onkeypress="return validateInput(event, 0, 100)" inputmode="numeric" oninput="plot()">
+							<p>%</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label for="lengthInput" id="lengthLabel">Lengd láns</label>
+						<br>
+						<div class="input-group">
+							<input id="lengthInput" type="number" value="25" min="1" max="40" step="1"
+								onkeypress="return validateInput(event, 0, 40)" inputmode="numeric" oninput="plot()">
+							<p>ár</p>
+						</div>
 					</div>
 				</div>
-				<div class="settings-group">
-					<label for="interestLabel" id="interestLabel">Vextir</label>
-					<br>
-					<div class="input-group">
-						<input id="interestInput" type="number" value="10" min="0" max="100" onkeypress="return validateInput(event, 0, 100)" inputmode="numeric" oninput="replot()">
-						<p>%</p>
-					</div>
-				</div>
-				<div class="settings-group">
-					<label for="lengthInput" id="lengthLabel">Lengd láns</label>
-					<br>
-					<div class="input-group">
-					<input id="lengthInput" type="number" value="25" min="1" max="40" step="1" onkeypress="return validateInput(event, 0, 40)" inputmode="numeric" oninput="replot()">
-					<p>ár</p>
-					</div>
-				</div>
-			</div>
-	</section>
+		</section>
 
-	<%- include('footer') %>
+		<%- include('footer') %>
 </body>
 
 </html>
