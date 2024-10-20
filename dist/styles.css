@@ -83,7 +83,17 @@ header {
 	position: sticky;
 	width: 100%;
 	background-color: white;
-	border: 1px solid black;
+}
+
+.break-line {
+	content: " ";
+	border: 1px solid #bbb;
+	margin: var(--spacing-big) auto;
+	max-width: calc(var(--max-width) - 0px);
+}
+
+header>div {
+	border-bottom: 1px solid #bbb;
 }
 
 .home {
@@ -241,7 +251,7 @@ header nav ul li a {
 	color: #757575;
 	border-radius: var(--border-radius-big);
 	/* stylelint-disable-next-line color-hex-length */
-	box-shadow: 1px 1px 3px 3px #00000033;
+	/* box-shadow: 1px 1px 3px 3px #00000033; */
 }
 
 /* Graph container */
@@ -266,7 +276,7 @@ header nav ul li a {
 	border-radius: var(--border-radius-big);
 	padding: var(--spacing-big);
 	/* stylelint-disable-next-line color-hex-length */
-	box-shadow: 1px 1px 3px 3px #00000033;
+	/* box-shadow: 1px 1px 3px 3px #00000033; */
 }
 
 .currency {
