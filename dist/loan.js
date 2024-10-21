@@ -152,8 +152,8 @@ function plot() {
     // labelX: "ár",
     labelY: " kr.",
 
-    tickSpacingY:
-      Math.pow(10, Math.round(Math.log10(principalInput.value))) / 10,
+    tickSpacingY: 10,
+    //   Math.pow(10, Math.round(Math.log10(principalInput.value))) / 10,
     tickSpacingX: 5,
   };
   return new LineChart("myChart", data, options);

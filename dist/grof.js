@@ -1537,7 +1537,7 @@ JSGrof.LineChart = function (canvasId, data, options) {
           this.r = this._getBase10Value(this.v[0] + this.v[1]);
           this.g = this._getBase10Value(this.v[2] + this.v[3]);
           this.b = this._getBase10Value(this.v[4] + this.v[5]);
-          this.ctx.fillStyle = `rgba(${this.r},${this.g},${this.b},0.1)`;
+          this.ctx.fillStyle = `rgba(${this.r},${this.g},${this.b},0.6)`;
           this.ctx.fill();
         }
       }
