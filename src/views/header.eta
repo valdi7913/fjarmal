@@ -9,16 +9,13 @@
 		<nav class="nav">
 			<ul>
 				<li>
-					<a href="/lán.html">Lán</a>
-					<!-- <img class="icon" src="./img/bank.svg" alt="banki"> -->
+					<a href="/lan.html">Lán</a>
 				</li>
 				<li>
 					<a href="/laun.html">Laun</a>
-					<!-- <img class="icon" src="./img/dollar.svg" alt="peningur"> -->
 				</li>
 				<li>
-					<a href="/sparnaður.html">Sparnaður</a>
-					<!-- <img class="icon" src="./img/wallet.svg" alt="veski"> -->
+					<a href="/sparnadur.html">Sparnaður</a>
 				</li>
 			</ul>
 		</nav>

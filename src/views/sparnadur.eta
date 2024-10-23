@@ -1,47 +1,22 @@
 <!Doctype html>
-<html lang="is">
+<html>
 
 <head>
     <meta charset="utf-8" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <title>Launamál</title>
-    <script defer src="./js/validation.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+	<title>Launamál</title>
+	<script src="./js/validation.js"></script>
     <script defer src="./js/grof.js"></script>
-    <script src="./js/tax.js"></script>
 </head>
 
-
 <body>
-    <header>
-	<div class="container max-width">
-		<div class="home">
-			<a class="home-title" href="/heim.html">
-				Fjármál
-			</a>
-			<p class="subtext"> á mannamáli </p>
-		</div>
-		<nav class="nav">
-			<ul>
-				<li>
-					<a href="/lan.html">Lán</a>
-				</li>
-				<li>
-					<a href="/laun.html">Laun</a>
-				</li>
-				<li>
-					<a href="/sparnadur.html">Sparnaður</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
-</header>
-    
+    <%~ include('header') %>
     <section class="max-width">
-        <h1> Launareiknivél </h1>
+        <h1> Sparnaðarreiknivél </h1>
         <div class="dashboard">
             <div class="main-stat">
                 <div class="dashboard-subtitle">
@@ -76,31 +51,18 @@
                 </div>
                 <div class="settings-group">
                     <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
-                        oninput="incomeChanged()">
+                    <input id="incomeInput" type="numeric" value="600000" min="0"
+                        max="3000000" step="10000" oninput="incomeChanged()">
                 </div>
                 <div class="settings-group">
                     <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
+                    <input id="incomeInput" placeholder="600000" type="numeric"
+                        value="600000" min="0" max="3000000" step="10000"
                         oninput="incomeChanged()">
                 </div>
             </div>
     </section>
-
-    <section class="quote max-width">
-    <q class="quote-text"> 
-        Vextir eru áttunda undur veraldar. Sá sem skilur þá, hagnast á þeim. Sá sem gerir það ekki, borgar þá
-    </q>
-    <p class="quote-author"> - Albert Einstein</p>
-</section>    <footer class="max-width">
-	<div class="footer-container">
-	<h3> Fjármál.is er smíðað af <a href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
-	<ul>
-		<li> Gmail: valdi7913@gmail.com </li>
-		<li> LinkedIn: <a>Valdimar Sverrisson</a></li>
-	</ul>
-	</div>
-</footer>
+    <%~ include('footer') %>
 </body>
 
 </html>

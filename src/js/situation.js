@@ -1,6 +1,5 @@
 class Situation {
     constructor(currentSavings, currentIncome, currentCosts, yearlyROI, yearlyPromotion, loanRatio) {
-        hello
         this.currentSavings = currentSavings;
         this.currentIncome = currentIncome;
         this.currentCosts = currentCosts;
@@ -58,7 +57,7 @@ class Situation {
     }
 }
 
-const ctx = document.getElementById('myChart');
+const ctx = document.getElementById('my-chart');
 const ratioLabel = document.getElementById('ratioLabel');
 const ratioInput = document.getElementById('ratioInput');
 ratioLabel.innerText = ratioInput.value + " %";
