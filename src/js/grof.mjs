@@ -2225,3 +2225,5 @@ JSGrof.HistoChart = function (canvasId, data, options) {
   // Return a bar char of the buckets
   return new JSGrof.BarChart(canvasId, buckets, options);
 };
+
+export default JSGrof;

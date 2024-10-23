@@ -3,25 +3,29 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "ejs src/views/heim.ejs -o dist/heim.html && ejs src/views/lán.ejs -o dist/lán.html && ejs src/views/sparnaður.ejs -o dist/sparnaður.html && ejs src/views/laun.ejs -o dist/laun.html",
-    "watch:html": "cross-env watch \"npm run build\" src/views",
-    "browser-sync": "browser-sync dist -w --index heim.html",
-    "dev": "concurrently \"npm run watch:html\" \"npm run browser-sync\"",
+    "build:templates": "node render.js",
+    "build:assets": "snowpack build",
+    "build": "npm run build:templates && npm run build:assets",
+    "dev:templates": "nodemon --watch src/views --ext eta --exec \"npm run build:templates\"",
+    "dev:assets": "snowpack dev",
+    "dev": "npm-run-all --parallel dev:templates dev:assets",
     "lint:js": "eslint .",
-    "lint:css": "stylelint '**/*.css'"
+    "lint:css": "stylelint '**/*.css'",
+    "test" : "uvu ./tests"
   },
   "author": "valdi7913",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.11.0",
-    "concurrently": "^9.0.1",
-    "cross-env": "^7.0.3",
-    "ejs": "^3.1.10",
-    "eslint": "^9.11.0",
-    "globals": "^15.9.0",
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "eta": "^3.5.0",
+    "nodemon": "^3.1.7",
+    "npm-run-all": "^4.1.5",
+    "snowpack": "^3.2.2",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
-    "watch": "^0.13.0"
+    "uvu": "^0.5.6"
   }
 }
