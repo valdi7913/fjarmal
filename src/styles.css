@@ -304,6 +304,20 @@ header nav ul li a {
     width:100%
 }
 
+.radio-option {
+	display: flex;
+	justify-content: space-between;
+}
+
+.radio-option > {
+
+}
+
+.radio-input {
+	width: 20px;
+	background-color: red;
+}
+
 .graph-container {
 	background-color: white;
 	grid-column: 1 / 3;
@@ -338,13 +352,20 @@ header nav ul li a {
 	border-radius: 16px;
 }
 
-canvas {
-    width:100%
-}
 
 input {
     width:100%;
     border-radius: var(--border-radius); 
+	padding: var(--spacing-tiny);
+	border: none;
+}
+
+input[type="number"]{
+    -moz-appearance: textfield;
+}
+
+input:focus{
+    outline: none;
 }
 
 .input-group {

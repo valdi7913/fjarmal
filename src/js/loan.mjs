@@ -1,83 +1,133 @@
 import Mortgage from "./mortgage.mjs";
-import JsGrof from "./grof";
 
 //Inputs
+
 const principalInput = document.getElementById("principal-input");
+principalInput.min = 0;
+principalInput.value = 20_000_000;
+principalInput.step = 100_000;
+principalInput.oninput = replot;
+
 const interestInput = document.getElementById("interest-input");
+interestInput.min = 0;
+interestInput.value = 10;
+interestInput.step = 0.1;
+interestInput.max = 100;
+interestInput.oninput = replot;
+
 const lengthInput = document.getElementById("length-input");
+lengthInput.min = 1;
+lengthInput.max = 40;
+lengthInput.value = 25;
+lengthInput.step = 1;
+lengthInput.oninput = replot;
 
-//on input
-principalInput.oninput = plot;
-interestInput.oninput = plot;
-lengthInput.oninput = plot;
+const equalPaymentsInput = document.getElementById("equal-payments");
+equalPaymentsInput.checked = true;
+equalPaymentsInput.onclick = replot;
 
-//Stats
+const equalInstallmentsInput = document.getElementById("equal-installments");
+equalInstallmentsInput.checked = false;
+equalInstallmentsInput.onclick = replot;
+
+const indexedInput = document.getElementById("indexed-input");
+indexedInput.checked = false;
+indexedInput.onclick = replot;
+
+const unindexedInput = document.getElementById("unindexed-input");
+unindexedInput.checked = true;
+unindexedInput.onclick = replot;
+
+const inflationInput = document.getElementById("inflation-input");
+inflationInput.oninput = replot;
+inflationInput.min = 0;
+inflationInput.value = 6;
+inflationInput.step = 0.1;
+inflationInput.max = 100;
+
+//Labels
 const totalPaidLabel = document.getElementById("total-paid");
 const interestPaid = document.getElementById("interest-paid");
 
+let chart = plot();
+
+function replot() {
+	chart.destroy();
+	chart = plot();
+}
+
 function plot() {
-    console.log("plotting and schemeing");
-    //   let principal = principalInput.value;
-    //   let interest = interestInput.value;
-    //   let length = lengthInput.value;
+	let principal = principalInput.value;
+	let interest = interestInput.value;
+	let length = lengthInput.value;
+	let equalPayments = equalPaymentsInput.checked;
+	let indexed = indexedInput.checked;
+	let inflation = inflationInput.value;
 
-    let principal = 100000
-    let interest = 4;
-    let length = 10;
+	let mortgage = new Mortgage(
+		principal,
+		interest,
+		length,
+		indexed,
+		equalPayments,
+		inflation
+	);
 
+	let principals = mortgage.getPlotablePrincipal();
+	let installments = mortgage.getPlotablePayment();
+	let interests = mortgage.getPlotableInterest();
+	const totalPaidString =
+		mortgage.getTotalPaid().toLocaleString("is-IS") + " kr.";
+	const totalInterestPaidString =
+		mortgage.getTotalInterestPaid().toLocaleString("is-IS") + " kr.";
 
-    let mortgage = new Mortgage(principal, interest, length, false, false);
+	totalPaidLabel.innerHTML = totalPaidString;
+	interestPaid.innerHTML = totalInterestPaidString;
 
-      let principals = [[0,0], [1,1]];
-      let installments = [[0,0], [1,1]];
-      let interests = [[0,0], [1,1]];
+	const ctx = document.getElementById("my-chart").getContext("2d");
 
-    // let principals = mortgage.getPlotablePrincipal();
-    // let installments = mortgage.getPlotablePayment();
-    // let interests = mortgage.getPlotableInterest();
-    let totalPaid = mortgage.getTotalPaid()
-    let totalInterestPaid = mortgage.getTotalInterestPaid()
+	const data = {
+		labels: mortgage.months,
+		title: "Greiðsluplan",
+		datasets: [
+			{
+				label: "Höfuðstóll",
+				data: principals,
+				fill: true,
+				borderColor: "#FF0000",
+			},
+			{
+				label: "Vextir",
+				data: interests,
+				fill: true,
+				borderColor: "#FF0000",
+			},
+			{
+				label: "Afborgannir",
+				data: installments,
+				fill: true,
+				borderColor: "#33ddFF",
+			},
+		],
+	};
 
-    totalPaidLabel.innerHTML = mortgage.getTotalPaid();
-    interestPaid.innerHTML = mortgage.getTotalInterestPaid();
+	const config = {
+		type: "line",
+		data: data,
+		options: {
+			responsive: true,
+			plugins: {
+				legend: {
+					position: "top",
+				},
+			},
+			scales: {
+				y: {
+					beginAtZero: true,
+				},
+			},
+		},
+	};
 
-    console.log("constructing graph");
-    const data = {
-        Höfuðstóll: principals,
-        Vextir: interests,
-        Mánaðargreiðslur: installments,
-    };
-
-    const options = {
-        bgColor: "#ffffff",
-        dataColors: ["#e8871e", "#BC4B51", "#BAD4AA"],
-        axisColor: "#000000",
-        strokeColor: "#000000",
-        lineWidth: 2,
-        resizeListener: true,
-        resolutionUpscale: 1,
-        dynamicFontSize: false,
-        legendType: "top",
-        fontSize: 16,
-        dataLabels: true,
-        interactive: true,
-        legend: true,
-        areaUnder: true,
-        points: false,
-        interactivityPrecisionX: 2,
-        interactivityPrecisionY: 4,
-
-        chartPaddingLeft: 0.15,
-        chartPaddingRight: 0,
-        chartPaddingTop: 0.1,
-        chartPaddingBottom: 0.1,
-
-        // labelX: "ár",
-        labelY: " kr.",
-
-        tickSpacingY: 10,
-        //   Math.pow(10, Math.round(Math.log10(principalInput.value))) / 10,
-        tickSpacingX: 5,
-    };
-    return new JsGrof.LineChart("my-chart", data, options);
+	return new Chart(ctx, config);
 }
