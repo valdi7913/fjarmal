@@ -1,121 +1,114 @@
 import Mortgage from "../src/js/mortgage.mjs";
 
-import { test, suite } from 'uvu';
-import * as assert from 'uvu/assert';
+import { test, suite } from "uvu";
+import * as assert from "uvu/assert";
 
-test('adding', () => {
-    assert.is(1 + 1, 2);
-})
+const equalPayments = suite("Equal Payments");
+const equalInstallments = suite("Equal Installments");
+const indexEqualPayments = suite("Index Equal Payments");
+const indexEqualInstallments = suite("Index Equal Installments");
 
-function formatIcelandicNumber(number) {
-    let outputString = "";
-    let stringified = number.toString();
-    for(let i = stringified.length -1; i > -1; i--) {
-        console.log(stringified[i])
-        outputString = stringified[i] + outputString;
-        if(i % 3 === 0 && i > stringified.length) {
-            outputString = '.' + outputString;
-        }
-    }
-    return outputString;
-}
+equalPayments("Óverðtryggt Jafnar Greiðslur Engir Vextir", () => {
+	const principal = 70_000_000;
+	const interest = 0;
+	const length_in_years = 40;
+	const insured = false;
+	const equal_payments = true;
 
+	const mortgage = new Mortgage(
+		principal,
+		interest,
+		length_in_years,
+		insured,
+		equal_payments
+	);
 
-
-
-const loan = suite('Lána Module')
-
-loan('Óverðtryggt Jafnar Greiðslur', () => {
-    const principal = 70_000_000;
-    const interest = 10.5;
-    const length_in_years = 40;
-    const insured = false;
-    const equal_payments = true
-
-    const mortgage = new Mortgage(
-        principal,
-        interest,
-        length_in_years,
-        insured,
-        equal_payments
-    );
-
-    assert.is(mortgage.getTotalPaid(), 187_186);
-    assert.is(mortgage.getTotalInterestPaid(), 58_386);
-    assert.is(mortgage.getFirstPayment(), 780);
+	assert.is(mortgage.getTotalPaid(), 70_000_000);
+	assert.is(mortgage.getTotalInterestPaid(), 0);
+	assert.is(mortgage.getFirstPayment(), 145_833);
 });
 
-loan('Óverðtryggt Jafnar Afborgannir', () => {
-    const principal = 70_000_000;
-    const interest = 10.5;
-    const length_in_years = 40;
-    const insured = false;
-    const equal_payments = false
+equalPayments("Óverðtryggt Jafnar Greiðslur", () => {
+	const principal = 70_000_000;
+	const interest = 10.5;
+	const length_in_years = 40;
+	const insured = false;
+	const equal_payments = true;
 
-    const mortgage = new Mortgage(
-        principal,
-        interest,
-        length_in_years,
-        insured,
-        equal_payments
-    );
+	const mortgage = new Mortgage(
+		principal,
+		interest,
+		length_in_years,
+		insured,
+		equal_payments
+	);
 
-    assert.is(mortgage.getTotalPaid(), 178_996);
-    assert.is(mortgage.getTotalInterestPaid(), 50_196);
-    assert.is(mortgage.getFirstPayment(), 954);
+	assert.is(mortgage.getTotalPaid(), 187_186);
+	assert.is(mortgage.getTotalInterestPaid(), 58_386);
+	assert.is(mortgage.getFirstPayment(), 780);
 });
 
-loan('Verðtryggt Jafnar Greiðslur', () => {
-    const principal = 70_000_000;
-    const interest = 10.5;
-    const length_in_years = 40;
-    const insured = true;
-    const equal_payments = true;
+equalInstallments("Óverðtryggt Jafnar Afborgannir", () => {
+	const principal = 70_000_000;
+	const interest = 10.5;
+	const length_in_years = 40;
+	const insured = false;
+	const equal_payments = false;
 
-    const mortgage = new Mortgage(
-        principal,
-        interest,
-        length_in_years,
-        insured,
-        equal_payments
-    );
+	const mortgage = new Mortgage(
+		principal,
+		interest,
+		length_in_years,
+		insured,
+		equal_payments
+	);
 
-    assert.is(mortgage.getTotalPaid(), 187_186);
-    assert.is(mortgage.getTotalInterestPaid(), 58_386);
-    assert.is(mortgage.getFirstPayment(), 780);
+	assert.is(mortgage.getTotalPaid(), 178_996);
+	assert.is(mortgage.getTotalInterestPaid(), 50_196);
+	assert.is(mortgage.getFirstPayment(), 954);
 });
 
-loan('Verðtryggt Jafnar Afborgannir', () => {
-    const principal = 70_000_000;
-    const interest = 10.5;
-    const length_in_years = 40;
-    const insured = true;
-    const equal_payments = false;
+indexEqualPayments("Verðtryggt Jafnar Greiðslur", () => {
+	const principal = 70_000_000;
+	const interest = 10.5;
+	const length_in_years = 40;
+	const insured = true;
+	const equal_payments = true;
 
-    const mortgage = new Mortgage(
-        principal,
-        interest,
-        length_in_years,
-        insured,
-        equal_payments
-    );
+	const mortgage = new Mortgage(
+		principal,
+		interest,
+		length_in_years,
+		insured,
+		equal_payments
+	);
 
-    assert.is(mortgage.getTotalPaid(), 178_996);
-    assert.is(mortgage.getTotalInterestPaid(), 50_196);
-    assert.is(mortgage.getFirstPayment(), 954);
-
+	assert.is(mortgage.getTotalPaid(), 187_186);
+	assert.is(mortgage.getTotalInterestPaid(), 58_386);
+	assert.is(mortgage.getFirstPayment(), 780);
 });
 
+indexEqualInstallments("Verðtryggt Jafnar Afborgannir", () => {
+	const principal = 70_000_000;
+	const interest = 10.5;
+	const length_in_years = 40;
+	const insured = true;
+	const equal_payments = false;
 
-const format = suite('Format');
+	const mortgage = new Mortgage(
+		principal,
+		interest,
+		length_in_years,
+		insured,
+		equal_payments
+	);
 
-format('hundraðstölur', () => {
-    let number = 100_000_000
+	assert.is(mortgage.getTotalPaid(), 178_996);
+	assert.is(mortgage.getTotalInterestPaid(), 50_196);
+	assert.is(mortgage.getFirstPayment(), 954);
+});
 
-    assert.is(formatIcelandicNumber(number), "100.000.000")
-})
-
-
-
-// loan.run()
-format.run()
+equalPayments.run();
+// equalInstallments.run();
+// indexEqualPayments.run();
+// indexEqualInstallments.run();
