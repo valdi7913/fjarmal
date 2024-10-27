@@ -1,10 +1,11 @@
 export default class Mortgage {
 	/**
 	 * @param {float} principal
-	 * @param {float} interest_rate
-	 * @param {integer} length_in_years
-	 * @param {boolean} [insured = false] insured
+	 * @param {float} interest_rate expressed as a yearly percentage X%
+	 * @param {integer} length_in_years expressed as a whole number of years
+	 * @param {boolean} [insured = false] boolean flag dictates whether loan is CPI backed
 	 * @param {boolean} [equal_payments = false] equal_payments
+	 * @param {float} [inflation = 0] expressed as a yearly percentage X%
 	 */
 	constructor(
 		principal,
@@ -15,11 +16,11 @@ export default class Mortgage {
 		inflation = 0
 	) {
 		this.principal = parseInt(principal);
-		this.interest_rate = parseFloat(interest_rate) / 100;
-		this.length = Math.ceil(parseFloat(length_in_years) * 12); // In months
-		this.insured = insured;
+		this.interest_rate = parseFloat(interest_rate) / 1200;      //converted to monthly interest as a decimal
+		this.length = parseFloat(length_in_years) * 12;             //converted to number of payments 
+		this.is_insured = insured;
 		this.is_equal_payments = equal_payments;
-		this.inflation = parseFloat(inflation) / 1200 + 1;
+		this.inflation = parseFloat(inflation) / 1200;              //converted to monthy inflation as a decimal
 
 		this.calculateLoan();
 	}
@@ -31,58 +32,62 @@ export default class Mortgage {
 		this.installment_history = [];
 		this.principal_history = [this.principal];
 
-		// Call either equal payments or equal installments
-		this.is_equal_payments
-			? this.equalPayments()
-			: this.equalInstallments();
+		// Calculate the corresponding loan type
+        if      ( this.is_equal_payments &&  this.is_insured) this.equalPaymentCpi();
+        else if ( this.is_equal_payments && !this.is_insured) this.equalPayments();        
+        else if (!this.is_equal_payments &&  this.is_insured) this.equalInstallmentsCpi();
+        else if (!this.is_equal_payments && !this.is_insured) this.equalInstallments();        
 	}
 
 	equalPayments() {
-		console.log("equal payments", this.is_equal_payments);
-		const r_m = this.interest_rate / 12;
-		const n = this.length;
+        console.log("equal payments");
+        for(let month = 1; month < this.length; month++) {
+            this.months[month] = month;
+            this.principal_history[month] = 
+                (this.principal) * 
+                (Math.pow(1 + this.interest_rate,this.length - month) - 1) /
+                (Math.pow(1 + this.interest_rate,this.length) - 1)
 
-		let payment;
-		if (r_m > 0) {
-			// Calculate the monthly payment once
-			payment =
-				(this.principal * (r_m * (1 + r_m) ** n)) /
-				((1 + r_m) ** n - 1);
-		} else {
-			payment = this.principal / n;
-		}
+            this.interest_history[month] = this.interest_rate * this.principal_history[month-1];
+            this.installment_history[month] = this.principal_history[month-1] - this.principal_history[month];
 
-		for (let i = 0; i < n; i++) {
-			const interest = r_m * this.principal_history[i];
-			const installment = payment - interest;
-			const adjustedPrincipal =
-				this.principal_history[i] * this.inflation - installment;
-
-			this.months.push(i + 1); // Push month number starting from 1
-
-			this.installment_history.push(Math.round(installment));
-			this.interest_history.push(Math.round(interest));
-			this.principal_history.push(Math.round(adjustedPrincipal));
-		}
+        }
 	}
 
 	equalInstallments() {
-		console.log("equal installments", this.is_equal_payments);
-		const r_m = this.interest_rate / 12;
-		const n = this.length;
-
-		for (let i = 0; i < n; i++) {
-			const interest = r_m * this.principal_history[i];
-			const installment = this.principal / n;
-
-			this.months.push(i + 1); // Push month number starting from 1
-			this.principal_history.push(
-				this.principal_history[i] - installment
-			);
-			this.installment_history.push(installment);
-			this.interest_history.push(interest);
-		}
+        console.log("equal installments");
+        for(let month = 1; month <= this.length; month++) {
+            this.months[month] = month;
+            this.principal_history  [month] = this.principal * (1 - (month / this.length));
+            this.installment_history[month] = this.principal / this.length;
+            this.interest_history   [month] = this.principal_history[month-1] * this.interest_rate; 
+        }
 	}
+
+    equalPaymentCpi() {
+        console.log("equal payments cpi");
+        for(let month = 1; month < this.length; month++) {
+            this.months[month] = month;
+            this.principal_history[month] = 
+                this.principal * 
+                Math.pow( 1 + this.inflation,month) *
+                (Math.pow(1 + this.interest_rate,(this.length - month)) - 1) /
+                (Math.pow(1 + this.interest_rate,(this.length)) - 1)
+
+            this.interest_history[month] = this.interest_rate * this.principal_history[month-1];
+            this.installment_history[month] = this.principal_history[month-1] - this.principal_history[month];
+        } 
+    }
+
+    equalInstallmentsCpi() {
+        console.log("equal installments cpi");
+        for(let month = 1; month < this.length; month++) {
+            this.months[month] = month;
+            this.principal_history  [month] = this.principal * ((1+this.inflation) ** month) * (1 - (month / this.length));
+            this.installment_history[month] = this.principal * ((1+this.inflation) ** month) / this.length;
+            this.interest_history   [month] = this.principal_history[month-1] * this.interest_rate; 
+        }
+    }
 
 	// Getters
 	getFirstPayment() {
@@ -97,13 +102,17 @@ export default class Mortgage {
 		return Math.round(sum);
 	}
 
+    getTotalPrincipalPayments() {
+ 		const sum = this.installment_history.reduce(
+			(sum, interest) => sum + interest,
+			0
+		);       
+
+        return Math.round(sum);
+    }
+
 	getTotalPaid() {
-		const sum =
-			this.installment_history.reduce(
-				(sum, installment) => sum + installment,
-				0
-			) + this.getTotalInterestPaid();
-		return Math.round(sum);
+		return this.getTotalInterestPaid() + this.getTotalPrincipalPayments();
 	}
 
 	getPlotablePrincipal() {
@@ -111,7 +120,6 @@ export default class Mortgage {
 	}
 
 	getPlotablePayment() {
-		let data = [];
 		return this.installment_history;
 	}
 

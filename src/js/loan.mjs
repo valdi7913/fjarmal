@@ -32,11 +32,11 @@ equalInstallmentsInput.onclick = replot;
 
 const indexedInput = document.getElementById("indexed-input");
 indexedInput.checked = false;
-indexedInput.onclick = replot;
+indexedInput.onclick = replotAndHide;
 
 const unindexedInput = document.getElementById("unindexed-input");
 unindexedInput.checked = true;
-unindexedInput.onclick = replot;
+unindexedInput.onclick = replotAndHide;
 
 const inflationInput = document.getElementById("inflation-input");
 inflationInput.oninput = replot;
@@ -45,11 +45,21 @@ inflationInput.value = 6;
 inflationInput.step = 0.1;
 inflationInput.max = 100;
 
+const inflationContainer = document.getElementById("inflation-container");
+inflationContainer.hidden = !indexedInput.checked;
+
 //Labels
 const totalPaidLabel = document.getElementById("total-paid");
 const interestPaid = document.getElementById("interest-paid");
 
 let chart = plot();
+
+function replotAndHide() {
+    inflationContainer.hidden = !indexedInput.checked;
+    console.log(!indexedInput.checked)
+    chart.destroy();
+    chart = plot();
+}
 
 function replot() {
 	chart.destroy();
@@ -80,7 +90,6 @@ function plot() {
 		mortgage.getTotalPaid().toLocaleString("is-IS") + " kr.";
 	const totalInterestPaidString =
 		mortgage.getTotalInterestPaid().toLocaleString("is-IS") + " kr.";
-
 	totalPaidLabel.innerHTML = totalPaidString;
 	interestPaid.innerHTML = totalInterestPaidString;
 
