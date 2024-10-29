@@ -44,7 +44,6 @@
 </header>
 		<section id="reiknivel" class="graph-section max-width">
 			<h1>Lánareiknivél</h1>
-			<hr class="break-line" />
 			<div class="dashboard">
 				<div class="main-stat">
 					<div class="dashboard-subtitle">
@@ -65,16 +64,28 @@
 					<label class="currency" id="interest-paid"> 100.000 </label>
 				</div>
 				<div class="graph-container">
-                    <div class="settings-container">
-                        <div class="radio-option"> 
-                            <label for="rolling-graph-input">Samtölur</label>
-                            <input id="rolling-graph-input" class="radio-input" type="radio" name="graph-type"> 
-                        </div>
-                        <div class="radio-option"> 
-                            <label for="monthly-graph-input">Mánaðargreiðslur</label>
-                            <input id="monthly-graph-input" class="radio-input" type="radio" name="graph-type"> 
-                        </div>
-                    </div>
+					<div class="settings-container">
+						<div class="radio-option">
+							<label for="rolling-graph-input">Samtölur</label>
+							<input
+								id="rolling-graph-input"
+								class="radio-input"
+								type="radio"
+								name="graph-type"
+							/>
+						</div>
+						<div class="radio-option">
+							<label for="monthly-graph-input"
+								>Mánaðargreiðslur</label
+							>
+							<input
+								id="monthly-graph-input"
+								class="radio-input"
+								type="radio"
+								name="graph-type"
+							/>
+						</div>
+					</div>
 					<div class="dashboard-subtitle">
 						<img class="icon" src="" />
 					</div>
@@ -99,7 +110,7 @@
 								type="number"
 								inputmode="numeric"
 							/>
-							<p>kr.</p>
+							<p class="input-type">kr.</p>
 						</div>
 					</div>
 					<div class="settings-group">
@@ -113,7 +124,7 @@
 								type="number"
 								inputmode="numeric"
 							/>
-							<p>%</p>
+							<p class="input-type">%</p>
 						</div>
 					</div>
 					<div class="settings-group">
@@ -127,7 +138,7 @@
 								type="number"
 								inputmode="numeric"
 							/>
-							<p>ár</p>
+							<p class="input-type">ár</p>
 						</div>
 					</div>
 					<label for="payment-option-list"
@@ -199,7 +210,7 @@
 									type="number"
 									inputmode="numeric"
 								/>
-								<p>%</p>
+								<p class="input-type">%</p>
 							</div>
 						</div>
 					</ul>
@@ -211,11 +222,7 @@
 
 		<footer class="max-width">
 	<div class="footer-container">
-	<h3> Fjármál.is er smíðað af <a href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
-	<ul>
-		<li> Gmail: valdi7913@gmail.com </li>
-		<li> LinkedIn: <a>Valdimar Sverrisson</a></li>
-	</ul>
+	<h3> Fjármál.is er smíðað af <a class="my-name" href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
 	</div>
 </footer>
 	</body>

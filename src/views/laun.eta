@@ -1,72 +1,200 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="is">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+		<title>Launamál</title>
+		<script defer src="./js/validation.js"></script>
+		<script defer src="./js/grof.js"></script>
+		<script src="./js/tax.js"></script>
+	</head>
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <title>Launamál</title>
-    <script defer src="./js/validation.js"></script>
-    <script defer src="./js/grof.js"></script>
-    <script src="./js/tax.js"></script>
-</head>
+	<body>
+		<%~ include('header') %>
 
+		<section id="reiknivel" class="graph-section max-width">
+			<h1>Lánareiknivél</h1>
+			<hr class="break-line" />
+			<div class="dashboard">
+				<div class="main-stat">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon white" src="./img/dollar.svg" />
+						</div>
+						<h3>Útborgað eftir skatt</h3>
+					</div>
+					<label class="currency" id="total-paid"> 100.000 </label>
+				</div>
+				<div class="alt-stat">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon" src="./img/percent.svg" />
+						</div>
+						<h3>Borgað í vexti</h3>
+					</div>
+					<label class="currency" id="interest-paid"> 100.000 </label>
+				</div>
+				<div class="graph-container">
+					<div class="settings-container">
+						<div class="radio-option">
+							<label for="rolling-graph-input">Samtölur</label>
+							<input
+								id="rolling-graph-input"
+								class="radio-input"
+								type="radio"
+								name="graph-type"
+							/>
+						</div>
+						<div class="radio-option">
+							<label for="monthly-graph-input"
+								>Mánaðargreiðslur</label
+							>
+							<input
+								id="monthly-graph-input"
+								class="radio-input"
+								type="radio"
+								name="graph-type"
+							/>
+						</div>
+					</div>
+					<div class="dashboard-subtitle">
+						<img class="icon" src="" />
+					</div>
+					<canvas id="my-chart"></canvas>
+				</div>
+				<div class="settings">
+					<div class="dashboard-subtitle">
+						<div class="icon-container">
+							<img class="icon" src="./img/settings.svg" />
+						</div>
+						<h3>Stillingar</h3>
+					</div>
+					<div class="settings-group">
+						<label for="principals-input" id="principal-label"
+							>Höfuðstóll</label
+						>
+						<br />
 
-<body>
-    <%~ include('header') %>
-    
-    <section class="max-width">
-        <h1> Launareiknivél </h1>
-        <div class="dashboard">
-            <div class="main-stat">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon white" src="./img/dollar.svg" />
-                    </div>
-                    <h3>Laun eftir skatt</h3>
-                </div>
-                <p class="currency" id="les"> 100.000 </p>
-            </div>
-            <div class="alt-stat">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon" src="./img/percent.svg" />
-                    </div>
-                    <h3>Borgað í skatt</h3>
-                </div>
-                <p class="currency" id="bis"> 100.000 </p>
-            </div>
-            <div class="graph-container">
-                <div class="dashboard-subtitle">
-                    <img class="icon" src="" />
-                </div>
-                <canvas id="my-chart"></canvas>
-            </div>
-            <div class="settings">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon" src="./img/settings.svg" />
-                    </div>
-                    <h3>Stillingar</h3>
-                </div>
-                <div class="settings-group">
-                    <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
-                        oninput="incomeChanged()">
-                </div>
-                <div class="settings-group">
-                    <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" type="numeric" value="600000" min="0" max="3000000" step="10000"
-                        oninput="incomeChanged()">
-                </div>
-            </div>
-    </section>
+						<div class="input-group">
+							<input
+								id="principal-input"
+								type="number"
+								inputmode="numeric"
+							/>
+							<p class="input-type">kr.</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label for="interest-input" id="interest-label"
+							>Vextir</label
+						>
+						<br />
+						<div class="input-group">
+							<input
+								id="interest-input"
+								type="number"
+								inputmode="numeric"
+							/>
+							<p class="input-type">.</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label for="length-input" id="length-label"
+							>Lengd láns</label
+						>
+						<br />
+						<div class="input-group">
+							<input
+								id="length-input"
+								type="number"
+								inputmode="numeric"
+							/>
+							<p class="input-type">ár</p>
+						</div>
+					</div>
+					<label for="payment-option-list"
+						>Tegund niðurgreiðslu:</label
+					>
+					<ul id="payment-option-list" class="settings-group">
+						<li class="radio-option">
+							<label
+								for="equal-installments"
+								id="equal-installments-label"
+								data="true"
+							>
+								Jafnar afborgannir</label
+							>
+							<input
+								class="radio-input"
+								id="equal-installments"
+								type="radio"
+								name="payment-option"
+							/>
+						</li>
+						<li class="radio-option">
+							<label
+								for="equal-payments"
+								id="equal-payments-label"
+							>
+								Jafnar greiðslur</label
+							>
+							<input
+								class="radio-input"
+								id="equal-payments"
+								type="radio"
+								name="payment-option"
+							/>
+						</li>
+					</ul>
+					<label for="index-option-list">Tegund verðtyggingar:</label>
+					<ul id="index-option-list" class="settings-group">
+						<li class="radio-option">
+							<label
+								for="unindexed-input"
+								id="unindexed-input-label"
+							>
+								Óverðtryggt</label
+							>
+							<input
+								class="radio-input"
+								id="unindexed-input"
+								type="radio"
+								name="index-option"
+							/>
+						</li>
+						<li class="radio-option">
+							<label for="indexed-input" id="indexed-input-label">
+								Verðtryggt</label
+							>
+							<input
+								class="radio-input"
+								id="indexed-input"
+								type="radio"
+								name="index-option"
+							/>
+						</li>
+						<div id="inflation-container">
+							<label for="inflation-input">Verðbólga</label>
+							<div class="input-group">
+								<input
+									id="inflation-input"
+									type="number"
+									inputmode="numeric"
+								/>
+								<p class="input-type">%</p>
+							</div>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</section>
 
-    <%~ include('quote') %>
-    <%~ include('footer') %>
-</body>
-
+		<%~ include('quote') %> <%~ include('footer') %>
+	</body>
 </html>

@@ -17,7 +17,7 @@ class Situation {
 
 		this.savingsHistory = [];
 		this.incomeHistory = [];
-		this.maxLoan = []
+		this.maxLoan = [];
 		this.years = [];
 	}
 
@@ -100,7 +100,6 @@ targetLabel.innerText = targetInput.value;
 let chart = plot();
 
 function currentSavingsChanged() {
-	console.log("Current Savings Changed");
 	currentSavingsLabel.innerHTML = formatNumberWithSeparators(
 		currentSavingsInput.value
 	);
@@ -109,14 +108,12 @@ function currentSavingsChanged() {
 }
 
 function loanRatioChanged() {
-	console.log("Ratio Changed");
 	ratioLabel.innerHTML = ratioInput.value + " %";
 	chart.destroy();
 	chart = plot();
 }
 
 function currentIncomeChanged() {
-	console.log("Income Changed");
 	currentIncomeLabel.innerHTML = formatNumberWithSeparators(
 		currentIncomeInput.value
 	);
@@ -125,14 +122,12 @@ function currentIncomeChanged() {
 }
 
 function yearChanged() {
-	console.log("Year Changed");
 	yearLabel.innerHTML = yearInput.value;
 	chart.destroy();
 	chart = plot();
 }
 
 function targetChanged() {
-	console.log("Target Changed");
 	targetLabel.innerHTML = formatNumberWithSeparators(targetInput.value);
 	chart.destroy();
 	chart = plot();

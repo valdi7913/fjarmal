@@ -48,11 +48,11 @@ inflationInput.max = 100;
 const inflationContainer = document.getElementById("inflation-container");
 inflationContainer.hidden = !indexedInput.checked;
 
-const rollingGraphInput = document.getElementById("rolling-graph-input") 
+const rollingGraphInput = document.getElementById("rolling-graph-input");
 rollingGraphInput.checked = true;
 rollingGraphInput.onclick = replot;
 
-const monthlyGraphInput = document.getElementById("monthly-graph-input") 
+const monthlyGraphInput = document.getElementById("monthly-graph-input");
 monthlyGraphInput.checked = false;
 monthlyGraphInput.onclick = replot;
 
@@ -63,10 +63,9 @@ const interestPaid = document.getElementById("interest-paid");
 let chart = plot();
 
 function replotAndHide() {
-    inflationContainer.hidden = !indexedInput.checked;
-    console.log(!indexedInput.checked)
-    chart.destroy();
-    chart = plot();
+	inflationContainer.hidden = !indexedInput.checked;
+	chart.destroy();
+	chart = plot();
 }
 
 function replot() {
@@ -92,12 +91,12 @@ function plot() {
 	);
 
 	const principals = mortgage.getPlotablePrincipal();
-    const rollingInstallments = mortgage.getPlotableRollingInstallments(); 
-    const rollingInterests = mortgage.getPlotableRollingInterest();
-    
+	const rollingInstallments = mortgage.getPlotableRollingInstallments();
+	const rollingInterests = mortgage.getPlotableRollingInterest();
+
 	const installments = mortgage.getPlotableInstallments();
 	const interests = mortgage.getPlotableInterest();
-    const payments = mortgage.getPlotablePayments();
+	const payments = mortgage.getPlotablePayments();
 
 	const totalPaidString =
 		mortgage.getTotalPaid().toLocaleString("is-IS") + " kr.";
@@ -109,34 +108,34 @@ function plot() {
 
 	const ctx = document.getElementById("my-chart").getContext("2d");
 
-    //Decide which datasets to show
-    let datasets = []
-    if(rollingGraphInput.checked) {
-        datasets=[
-        {
-            label: "Samtals Afborgannir",
-            data: rollingInstallments,
-            fill: false,
-            borderColor: "#8FF7A7",
-            backgroundColor: "#8FF7A755",
-        }, 
-        {
-            label: "Samtals Vextir",
-            data: rollingInterests,
-            fill: true,
-            borderColor: "#db5461",
-            backgroundColor: "#db546155",
-        },
-        {
-            label: "Höfuðstóll",
-            data: principals,
-            fill: true,
-            borderColor: "#058ed9",
-            backgroundColor: "#058ed955",
-        },
-    ];
-    } else {
-        datasets = [
+	//Decide which datasets to show
+	let datasets = [];
+	if (rollingGraphInput.checked) {
+		datasets = [
+			{
+				label: "Samtals Afborgannir",
+				data: rollingInstallments,
+				fill: false,
+				borderColor: "#8FF7A7",
+				backgroundColor: "#8FF7A755",
+			},
+			{
+				label: "Samtals Vextir",
+				data: rollingInterests,
+				fill: true,
+				borderColor: "#db5461",
+				backgroundColor: "#db546155",
+			},
+			{
+				label: "Höfuðstóll",
+				data: principals,
+				fill: true,
+				borderColor: "#058ed9",
+				backgroundColor: "#058ed955",
+			},
+		];
+	} else {
+		datasets = [
 			{
 				label: "Afborgannir",
 				data: installments,
@@ -158,21 +157,20 @@ function plot() {
 				borderColor: "#058ed9",
 				backgroundColor: "#058ed955",
 			},
-
-        ]
-    }
+		];
+	}
 
 	const data = {
 		labels: mortgage.months,
 		title: "Greiðsluplan",
-		datasets: datasets
+		datasets: datasets,
 	};
 
 	const config = {
 		type: "line",
 		data: data,
 		options: {
-            animation: false,
+			animation: false,
 			responsive: true,
 			plugins: {
 				legend: {
@@ -180,11 +178,11 @@ function plot() {
 				},
 			},
 			scales: {
-                x: {
-                    min: 1,
-                },
+				x: {
+					min: 1,
+				},
 				y: {
-                    min:0,
+					min: 0,
 				},
 			},
 		},
