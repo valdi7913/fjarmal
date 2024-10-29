@@ -27,9 +27,9 @@ export default class Mortgage {
 
 	calculateLoan() {
 		// Initialize loan variables
-		this.months = [];
-		this.interest_history = [];
-		this.installment_history = [];
+		this.months = [0];
+		this.interest_history = [0];
+		this.installment_history = [0];
 		this.principal_history = [this.principal];
 
 		// Calculate the corresponding loan type
@@ -41,16 +41,13 @@ export default class Mortgage {
 
 	equalPayments() {
         console.log("equal payments");
-        for(let month = 1; month < this.length; month++) {
+        let m = this.principal * this.interest_rate * Math.pow(1+this.interest_rate, this.length) / (Math.pow(1+this.interest_rate, this.length) - 1);
+        console.log("m" ,m)
+        for(let month = 1; month <= this.length; month++) {
             this.months[month] = month;
-            this.principal_history[month] = 
-                (this.principal) * 
-                (Math.pow(1 + this.interest_rate,this.length - month) - 1) /
-                (Math.pow(1 + this.interest_rate,this.length) - 1)
-
+            this.principal_history.push(this.principal_history[month-1 ] * (1+ this.interest_rate) - m);
             this.interest_history[month] = this.interest_rate * this.principal_history[month-1];
-            this.installment_history[month] = this.principal_history[month-1] - this.principal_history[month];
-
+            this.installment_history[month] = m - this.interest_history[month - 1];
         }
 	}
 
@@ -66,22 +63,22 @@ export default class Mortgage {
 
     equalPaymentCpi() {
         console.log("equal payments cpi");
-        for(let month = 1; month < this.length; month++) {
+        let m = this.principal * this.interest_rate * Math.pow(1+this.interest_rate, this.length) / (Math.pow(1+this.interest_rate, this.length) - 1);
+        for(let month = 1; month <= this.length; month++) {
             this.months[month] = month;
-            this.principal_history[month] = 
-                this.principal * 
-                Math.pow( 1 + this.inflation,month) *
-                (Math.pow(1 + this.interest_rate,(this.length - month)) - 1) /
-                (Math.pow(1 + this.interest_rate,(this.length)) - 1)
-
+            this.principal_history[month] = (this.principal_history[month-1] * (1+this.interest_rate) * (1+this.inflation) - m * Math.pow(1+this.inflation, month));
             this.interest_history[month] = this.interest_rate * this.principal_history[month-1];
-            this.installment_history[month] = this.principal_history[month-1] - this.principal_history[month];
+            this.installment_history[month] = Math.pow(1+this.inflation, month) * m - this.interest_history[month-1];
         } 
+
+        console.log("principal history", this.principal_history);
+        console.log("interest history", this.interest_history);
+        console.log("installment history", this.installment_history);
     }
 
     equalInstallmentsCpi() {
         console.log("equal installments cpi");
-        for(let month = 1; month < this.length; month++) {
+        for(let month = 1; month <= this.length; month++) {
             this.months[month] = month;
             this.principal_history  [month] = this.principal * ((1+this.inflation) ** month) * (1 - (month / this.length));
             this.installment_history[month] = this.principal * ((1+this.inflation) ** month) / this.length;
@@ -116,14 +113,49 @@ export default class Mortgage {
 	}
 
 	getPlotablePrincipal() {
+        console.log("principal" ,this.principal_history)
 		return this.principal_history;
 	}
 
-	getPlotablePayment() {
+	getPlotableInstallments() {
+        console.log("Payments", this.installment_history);
 		return this.installment_history;
 	}
 
 	getPlotableInterest() {
 		return this.interest_history;
 	}
+
+    getPlotableRollingInstallments() {
+        let data = [this.installment_history[0]];
+        for(let i = 1; i < this.installment_history.length; i++) {
+            data[i] = this.installment_history[i] + data[i-1]
+        }
+        console.log("rolling payments", data);
+        return data;
+    }
+
+    getPlotableRollingInterest() {
+        let data = [this.interest_history[0]];
+        for(let i = 1; i < this.interest_history.length; i++) {
+            data[i] = this.interest_history[i] + data[i-1]
+        }
+        return data;
+    }
+
+    getPlotablePayments() {
+        let data = [];
+        for(let i = 0; i < this.interest_history.length; i++) {
+            data[i] = this.interest_history[i] + this.installment_history[i];
+        }
+        return data;
+    }
+
+    getPlotableRollingPayments() {
+        let data = [this.interest_history[0]+this.installment_history[0]];
+        for(let i = 1; i < this.interest_history.length; i++) {
+            data[i] = this.interest_history[i] + this.installment_history[i]+ data[i-1];
+        }
+        return data;
+    }
 }
