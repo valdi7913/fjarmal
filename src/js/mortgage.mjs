@@ -27,7 +27,7 @@ export default class Mortgage {
 
 	calculateLoan() {
 		// Initialize loan variables
-		this.months = [0];
+		this.months = [];
 		this.interest_history = [0];
 		this.installment_history = [0];
 		this.principal_history = [this.principal];
@@ -51,18 +51,27 @@ export default class Mortgage {
 
 		for (let month = 1; month <= this.length; month++) {
 			this.months[month] = month;
-			this.principal_history[month] = this.principal_history[month - 1] * (1 + this.interest_rate) - m;
-			this.interest_history [month] = this.interest_rate * this.principal_history[month - 1];
-			this.installment_history[month] = m - this.interest_history[month - 1];
+			this.principal_history[month] =
+				this.principal_history[month - 1] * (1 + this.interest_rate) -
+				m;
+			this.interest_history[month] =
+				this.interest_rate * this.principal_history[month - 1];
+			this.installment_history[month] = m - this.interest_history[month];
 		}
+
+		console.log(m);
+		console.log(this.installment_history);
+		console.log(this.interest_history);
 	}
 
 	equalInstallments() {
 		for (let month = 1; month <= this.length; month++) {
 			this.months[month] = month;
-			this.principal_history   [month] = this.principal * (1 - month / this.length);
-			this.installment_history [month] = this.principal / this.length;
-			this.interest_history    [month] = this.principal_history[month - 1] * this.interest_rate;
+			this.principal_history[month] =
+				this.principal * (1 - month / this.length);
+			this.installment_history[month] = this.principal / this.length;
+			this.interest_history[month] =
+				this.principal_history[month - 1] * this.interest_rate;
 		}
 	}
 
@@ -83,7 +92,7 @@ export default class Mortgage {
 				this.interest_rate * this.principal_history[month - 1];
 			this.installment_history[month] =
 				Math.pow(1 + this.inflation, month) * m -
-				this.interest_history[month - 1];
+				this.interest_history[month];
 		}
 	}
 
