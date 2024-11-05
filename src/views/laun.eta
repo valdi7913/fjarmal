@@ -12,6 +12,7 @@
 		<title>Launamál</title>
 		<script defer src="./js/validation.js"></script>
 		<script defer src="./js/grof.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="./js/tax.js"></script>
 	</head>
 
@@ -19,7 +20,7 @@
 		<%~ include('header') %>
 
 		<section id="reiknivel" class="graph-section max-width">
-			<h1>Lánareiknivél</h1>
+			<h1>Launareiknivél</h1>
 			<hr class="break-line" />
 			<div class="dashboard">
 				<div class="main-stat">
@@ -36,14 +37,14 @@
 						<div class="icon-container">
 							<img class="icon" src="./img/percent.svg" />
 						</div>
-						<h3>Borgað í vexti</h3>
+						<h3>Borgað í skatt</h3>
 					</div>
 					<label class="currency" id="interest-paid"> 100.000 </label>
 				</div>
 				<div class="graph-container">
 					<div class="settings-container">
 						<div class="radio-option">
-							<label for="rolling-graph-input">Samtölur</label>
+							<label for="rolling-graph-input">Árslaun</label>
 							<input
 								id="rolling-graph-input"
 								class="radio-input"
@@ -53,7 +54,7 @@
 						</div>
 						<div class="radio-option">
 							<label for="monthly-graph-input"
-								>Mánaðargreiðslur</label
+								>Mánaðarlaun</label
 							>
 							<input
 								id="monthly-graph-input"
@@ -77,7 +78,7 @@
 					</div>
 					<div class="settings-group">
 						<label for="principals-input" id="principal-label"
-							>Höfuðstóll</label
+							>Laun fyrir skatt</label
 						>
 						<br />
 
@@ -92,7 +93,7 @@
 					</div>
 					<div class="settings-group">
 						<label for="interest-input" id="interest-label"
-							>Vextir</label
+							>Hlutfall skattkorts</label
 						>
 						<br />
 						<div class="input-group">
@@ -104,93 +105,6 @@
 							<p class="input-type">.</p>
 						</div>
 					</div>
-					<div class="settings-group">
-						<label for="length-input" id="length-label"
-							>Lengd láns</label
-						>
-						<br />
-						<div class="input-group">
-							<input
-								id="length-input"
-								type="number"
-								inputmode="numeric"
-							/>
-							<p class="input-type">ár</p>
-						</div>
-					</div>
-					<label for="payment-option-list"
-						>Tegund niðurgreiðslu:</label
-					>
-					<ul id="payment-option-list" class="settings-group">
-						<li class="radio-option">
-							<label
-								for="equal-installments"
-								id="equal-installments-label"
-								data="true"
-							>
-								Jafnar afborgannir</label
-							>
-							<input
-								class="radio-input"
-								id="equal-installments"
-								type="radio"
-								name="payment-option"
-							/>
-						</li>
-						<li class="radio-option">
-							<label
-								for="equal-payments"
-								id="equal-payments-label"
-							>
-								Jafnar greiðslur</label
-							>
-							<input
-								class="radio-input"
-								id="equal-payments"
-								type="radio"
-								name="payment-option"
-							/>
-						</li>
-					</ul>
-					<label for="index-option-list">Tegund verðtyggingar:</label>
-					<ul id="index-option-list" class="settings-group">
-						<li class="radio-option">
-							<label
-								for="unindexed-input"
-								id="unindexed-input-label"
-							>
-								Óverðtryggt</label
-							>
-							<input
-								class="radio-input"
-								id="unindexed-input"
-								type="radio"
-								name="index-option"
-							/>
-						</li>
-						<li class="radio-option">
-							<label for="indexed-input" id="indexed-input-label">
-								Verðtryggt</label
-							>
-							<input
-								class="radio-input"
-								id="indexed-input"
-								type="radio"
-								name="index-option"
-							/>
-						</li>
-						<div id="inflation-container">
-							<label for="inflation-input">Verðbólga</label>
-							<div class="input-group">
-								<input
-									id="inflation-input"
-									type="number"
-									inputmode="numeric"
-								/>
-								<p class="input-type">%</p>
-							</div>
-						</div>
-					</ul>
 				</div>
 			</div>
 		</section>

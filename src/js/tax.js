@@ -26,7 +26,6 @@ const ctx = document.getElementById('chart');
 
 const incomeInput = document.getElementById('incomeInput');
 const incomeLabel = document.getElementById('incomeLabel');
-incomeLabel.innerHTML = formatNumberWithSeparators(incomeInput.value);
 
 function zip(x, y) {
     let data = [];
@@ -42,7 +41,7 @@ function zip(x, y) {
 }
 
 function incomeChanged() {
-    incomeLabel.innerHTML = formatNumberWithSeparators(incomeInput.value);
+    incomeLabel.innerHTML = incomeInput.value;
     chart.destroy()
     chart = plot()
 }
@@ -51,7 +50,7 @@ function plot() {
     incomeBeforeTax = [];
     incomeTax = [];
     incomeAfterTax = [];
-    target = parseInt(incomeInput.value)
+    target = 1_000_000;
     for(let amount = 0; amount < 3_000_000; amount += 10_000) {
         let tax = calculateTax(amount);
 
