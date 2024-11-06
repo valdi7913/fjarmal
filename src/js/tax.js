@@ -1,103 +1,135 @@
 function calculateTax(amount) {
-    let taxStep1 = 0.3148;
-    let taxStep2 = 0.3798;
-    let taxStep3 = 0.4628;
+	let taxStep1 = 0.3148;
+	let taxStep2 = 0.3798;
 
-    let taxStep1UpperLimit =   446_136;
-    let taxStep2UpperLimit = 1_252_501;
+	let taxStep3 = 0.4628;
 
-    let totalTax = 0;
+	let taxStep1UpperLimit = 446_136;
+	let taxStep2UpperLimit = 1_252_501;
 
-    if(amount <= taxStep1UpperLimit) {
-        totalTax = amount * taxStep1;
-    } else if(amount <= taxStep2UpperLimit) {
-        totalTax += (taxStep1UpperLimit) * taxStep1;
-        totalTax += (amount - taxStep1UpperLimit) * taxStep2; 
-    } else {
-        totalTax += (taxStep1UpperLimit) * taxStep1;
-        totalTax += (taxStep2UpperLimit - taxStep1UpperLimit) * taxStep2;
-        totalTax += (amount - taxStep2UpperLimit) * taxStep3; 
-    }
+	let totalTax = 0;
 
-    return totalTax;
+	if (amount <= taxStep1UpperLimit) {
+		totalTax = amount * taxStep1;
+	} else if (amount <= taxStep2UpperLimit) {
+		totalTax += taxStep1UpperLimit * taxStep1;
+		totalTax += (amount - taxStep1UpperLimit) * taxStep2;
+	} else {
+		totalTax += taxStep1UpperLimit * taxStep1;
+		totalTax += (taxStep2UpperLimit - taxStep1UpperLimit) * taxStep2;
+		totalTax += (amount - taxStep2UpperLimit) * taxStep3;
+	}
+
+	return totalTax;
 }
 
-const ctx = document.getElementById('chart');
+//Labels
+const incomeAfterTaxLabel = document.getElementById("income-after-tax-label");
+const paidTaxLabel = document.getElementById("paid-tax-label");
 
-const incomeInput = document.getElementById('incomeInput');
-const incomeLabel = document.getElementById('incomeLabel');
+const canvas = document.getElementById("my-chart");
+const ctx = canvas.getContext("2d");
 
-function zip(x, y) {
-    let data = [];
+//Inputs
+const incomeInput = document.getElementById("income-input");
+incomeInput.min = 0;
+incomeInput.value = 800_000;
+incomeInput.step = 10_000;
+incomeInput.oninput = replot;
 
-    if(x.length !== y.length) {
-        throw new Error("Lists must be equal length but are of length x:" + x.length + " y:" + y.length);
-    }
+const taxcardInput = document.getElementById("taxcard-input");
+taxcardInput.min = 0;
+taxcardInput.value = 100;
+taxcardInput.step = 1;
+taxcardInput.max = 100;
+taxcardInput.oninput = replot;
 
-    for(let i = 0; i < x.length; i++) {
-        data.push({"x":x[i], "y": y[i]});
-    }
-    return data;
-}
+const pensionInput = document.getElementById("pension-input");
+pensionInput.min = 0;
+pensionInput.value = 0;
+pensionInput.step = 1;
+pensionInput.max = 8;
+pensionInput.oninput = replot;
 
-function incomeChanged() {
-    incomeLabel.innerHTML = incomeInput.value;
-    chart.destroy()
-    chart = plot()
+const suplementaryPensionInput = document.getElementById(
+	"supplementary-pension-input"
+);
+
+suplementaryPensionInput.min = 0;
+suplementaryPensionInput.max = 8;
+suplementaryPensionInput.value = 0;
+suplementaryPensionInput.step = 1;
+suplementaryPensionInput.oninput = replot;
+
+function replot() {
+	chart.destroy();
+	chart = plot();
 }
 
 function plot() {
-    incomeBeforeTax = [];
-    incomeTax = [];
-    incomeAfterTax = [];
-    target = 1_000_000;
-    for(let amount = 0; amount < 3_000_000; amount += 10_000) {
-        let tax = calculateTax(amount);
+	incomeBeforeTax = [];
+	incomeTax = [];
+	incomeAfterTax = [];
+	target = incomeInput.value;
+	for (
+		let amount = 0;
+		amount < Math.max(1_600_000, target * 1.2);
+		amount += 10_000
+	) {
+		let tax = calculateTax(amount);
 
-        incomeBeforeTax.push(amount);
-        incomeTax.push(tax);
-        incomeAfterTax.push(amount - tax);
-    }
+		incomeBeforeTax.push(amount);
+		incomeTax.push(tax);
+		incomeAfterTax.push(amount - tax);
+	}
 
-    return new Chart(ctx, {
-            type: 'line',
-            data: {
-                datasets: [
-                {
-                    label: 'Þín laun',
-                    data: [{"x": target, "y": target - calculateTax(target)}],
-                    color: "red",
-                    pointRadius: 5
-                },
-                {
-                    label: 'Laun eftir skatt',
-                    data: zip(incomeBeforeTax, incomeAfterTax),
-                    color: "blue",
-                    pointRadius: 1
-                }
-            ]
-            },
-            options: {
-                animation: false,
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: {
-                            display: true,
-                            text: 'Ár'
-                        },
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Upphæð í kr.'
-                        },
-                        min: 0
-                    }
-                }
-            }
-    });
+	const data = {
+		labels: incomeBeforeTax,
+		title: "Laun fyrir og eftir skatt",
+		datasets: [
+			{
+				label: "Þín laun",
+				data: [{ x: target, y: target - calculateTax(target) }],
+				color: "red",
+				pointRadius: 5,
+			},
+			{
+				label: "Laun eftir skatt",
+				data: incomeAfterTax,
+				color: "blue",
+				pointRadius: 1,
+			},
+		],
+	};
+
+	const config = {
+		type: "line",
+		data: data,
+
+		options: {
+			animation: false,
+			responsive: true,
+			scales: {
+				x: {
+					type: "linear",
+					position: "bottom",
+					title: {
+						display: true,
+						text: "Ár",
+					},
+				},
+				y: {
+					title: {
+						display: true,
+						text: "Upphæð í kr.",
+					},
+					min: 0,
+				},
+			},
+		},
+	};
+
+	return new Chart(ctx, config);
 }
 
-let chart = plot()
+let chart = plot();

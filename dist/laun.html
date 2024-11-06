@@ -11,9 +11,8 @@
 		<link rel="stylesheet" href="styles.css" />
 		<title>Launamál</title>
 		<script defer src="./js/validation.js"></script>
-		<script defer src="./js/grof.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<script src="./js/tax.js"></script>
+		<script defer src="./js/tax.js"></script>
 	</head>
 
 	<body>
@@ -40,10 +39,8 @@
 		</nav>
 	</div>
 </header>
-
 		<section id="reiknivel" class="graph-section max-width">
 			<h1>Launareiknivél</h1>
-			<hr class="break-line" />
 			<div class="dashboard">
 				<div class="main-stat">
 					<div class="dashboard-subtitle">
@@ -52,7 +49,9 @@
 						</div>
 						<h3>Útborgað eftir skatt</h3>
 					</div>
-					<label class="currency" id="total-paid"> 100.000 </label>
+					<label class="currency" id="income-after-tax-label">
+						100.000
+					</label>
 				</div>
 				<div class="alt-stat">
 					<div class="dashboard-subtitle">
@@ -61,23 +60,23 @@
 						</div>
 						<h3>Borgað í skatt</h3>
 					</div>
-					<label class="currency" id="interest-paid"> 100.000 </label>
+					<label class="currency" id="paid-tax-label">
+						100.000
+					</label>
 				</div>
 				<div class="graph-container">
 					<div class="settings-container">
 						<div class="radio-option">
-							<label for="rolling-graph-input">Árslaun</label>
+							<label for="yearly-graph-input">Árslaun</label>
 							<input
-								id="rolling-graph-input"
+								id="yearly-graph-input"
 								class="radio-input"
 								type="radio"
 								name="graph-type"
 							/>
 						</div>
 						<div class="radio-option">
-							<label for="monthly-graph-input"
-								>Mánaðarlaun</label
-							>
+							<label for="monthly-graph-input">Mánaðarlaun</label>
 							<input
 								id="monthly-graph-input"
 								class="radio-input"
@@ -99,14 +98,12 @@
 						<h3>Stillingar</h3>
 					</div>
 					<div class="settings-group">
-						<label for="principals-input" id="principal-label"
-							>Laun fyrir skatt</label
-						>
-						<br />
-
+						<label for="income-input" id="income-label">
+							Laun fyrir skatt
+						</label>
 						<div class="input-group">
 							<input
-								id="principal-input"
+								id="income-input"
 								type="number"
 								inputmode="numeric"
 							/>
@@ -114,17 +111,45 @@
 						</div>
 					</div>
 					<div class="settings-group">
-						<label for="interest-input" id="interest-label"
-							>Hlutfall skattkorts</label
-						>
-						<br />
+						<label for="taxcard-input" id="taxcard-label">
+							Hlutfall skattkorts
+						</label>
 						<div class="input-group">
 							<input
-								id="interest-input"
+								id="taxcard-input"
 								type="number"
 								inputmode="numeric"
 							/>
-							<p class="input-type">.</p>
+							<p class="input-type">%</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label for="pension-input" id="pension-label">
+							Hlutfall launa í lífeyrissjóð
+						</label>
+						<div class="input-group">
+							<input
+								id="pension-input"
+								type="number"
+								inputmode="numeric"
+							/>
+							<p class="input-type">%</p>
+						</div>
+					</div>
+					<div class="settings-group">
+						<label
+							for="supplementary-pension-input"
+							id="supplementary-pension-label"
+						>
+							Hlutfall launa í viðbótalífeyrissjóð
+						</label>
+						<div class="input-group">
+							<input
+								id="supplementary-pension-input"
+								type="number"
+								inputmode="numeric"
+							/>
+							<p class="input-type">%</p>
 						</div>
 					</div>
 				</div>
