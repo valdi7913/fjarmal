@@ -1,11 +1,10 @@
-function calculateTax(amount) {
-	let taxStep1 = 0.3148;
-	let taxStep2 = 0.3798;
+function calculateTax(amount, taxcard = 0, pensionRatio = 0) {
+	const taxStep1 = 0.3148;
+	const taxStep2 = 0.3798;
+	const taxStep3 = 0.4628;
 
-	let taxStep3 = 0.4628;
-
-	let taxStep1UpperLimit = 446_136;
-	let taxStep2UpperLimit = 1_252_501;
+	const taxStep1UpperLimit = 446_136;
+	const taxStep2UpperLimit = 1_252_501;
 
 	let totalTax = 0;
 
@@ -70,10 +69,13 @@ function plot() {
 	incomeBeforeTax = [];
 	incomeTax = [];
 	incomeAfterTax = [];
-	target = incomeInput.value;
+	const targetSalary = Math.round(incomeInput.value);
+	const targetSalaryTax = Math.round(calculateTax(targetSalary));
+	const targetSalaryAfterTax = Math.round(targetSalary - targetSalaryTax);
+
 	for (
 		let amount = 0;
-		amount < Math.max(1_600_000, target * 1.2);
+		amount < Math.max(1_600_000, targetSalary * 1.2);
 		amount += 10_000
 	) {
 		let tax = calculateTax(amount);
@@ -83,21 +85,43 @@ function plot() {
 		incomeAfterTax.push(amount - tax);
 	}
 
+	//Assign labels
+	incomeAfterTaxLabel.innerText =
+		targetSalaryAfterTax.toLocaleString("is-Is") + " kr.";
+	paidTaxLabel.innerText = targetSalaryTax.toLocaleString("is-Is") + " kr.";
+
+	//Tax steps
+	const firstTaxStep = 446_136;
+	const firstTaxStepAfterTax = firstTaxStep - calculateTax(firstTaxStep);
+	const secondTaxStep = 1_252_501;
+	const secondTaxStepAfterTax = secondTaxStep - calculateTax(secondTaxStep);
+
 	const data = {
 		labels: incomeBeforeTax,
 		title: "Laun fyrir og eftir skatt",
 		datasets: [
 			{
-				label: "Þín laun",
-				data: [{ x: target, y: target - calculateTax(target) }],
-				color: "red",
+				label: "Fyrsta skattþrep",
+				data: [{ x: firstTaxStep, y: firstTaxStepAfterTax }],
 				pointRadius: 5,
+			},
+			{
+				label: "Annað skattþrep",
+				data: [{ x: secondTaxStep, y: secondTaxStepAfterTax }],
+				pointRadius: 5,
+			},
+			{
+				label: "Þín laun",
+				data: [{ x: targetSalary, y: targetSalaryAfterTax }],
+				color: "red",
+				pointRadius: 10,
 			},
 			{
 				label: "Laun eftir skatt",
 				data: incomeAfterTax,
 				color: "blue",
 				pointRadius: 1,
+				lineWidth: 10,
 			},
 		],
 	};
