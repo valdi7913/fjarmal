@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet" href="styles.css">
-	<title>Launamál</title>
-	<script src="./js/validation.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Launamál</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="./js/situation.js"></script>
 </head>
 
 <body>
@@ -36,54 +37,66 @@
 		</nav>
 	</div>
 </header>
-    <section class="max-width">
-        <h1> Sparnaðarreiknivél </h1>
-        <div class="dashboard">
-            <div class="main-stat">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon white" src="./img/dollar.svg" />
+        <section class="max-width">
+            <h1> Sparnaðarreiknivél </h1>
+            <div class="dashboard">
+                <div class="main-stat">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon white" src="./img/dollar.svg" />
+                        </div>
+                        <h3>Laun eftir skatt</h3>
                     </div>
-                    <h3>Laun eftir skatt</h3>
+                    <p class="currency" id="les"> 100.000 </p>
                 </div>
-                <p class="currency" id="les"> 100.000 </p>
-            </div>
-            <div class="alt-stat">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon" src="./img/percent.svg" />
+                <div class="alt-stat">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon" src="./img/percent.svg" />
+                        </div>
+                        <h3>Borgað í skatt</h3>
                     </div>
-                    <h3>Borgað í skatt</h3>
+                    <p class="currency" id="bis"> 100.000 </p>
                 </div>
-                <p class="currency" id="bis"> 100.000 </p>
-            </div>
-            <div class="graph-container">
-                <div class="dashboard-subtitle">
-                    <img class="icon" src="" />
-                </div>
-                <canvas id="my-chart"></canvas>
-            </div>
-            <div class="settings">
-                <div class="dashboard-subtitle">
-                    <div class="icon-container">
-                        <img class="icon" src="./img/settings.svg" />
+                <div class="graph-container">
+                    <div class="dashboard-subtitle">
+                        <img class="icon" src="" />
                     </div>
-                    <h3>Stillingar</h3>
+                    <canvas id="my-chart"></canvas>
                 </div>
-                <div class="settings-group">
-                    <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" type="numeric" value="600000" min="0"
-                        max="3000000" step="10000" oninput="incomeChanged()">
+                <div class="settings">
+                    <div class="dashboard-subtitle">
+                        <div class="icon-container">
+                            <img class="icon" src="./img/settings.svg" />
+                        </div>
+                        <h3>Stillingar</h3>
+                    </div>
+                    <div class="settings-group">
+                        <label id="incomeLabel">Laun eftir skatt</label>
+                        <input id="incomeInput" type="number" inputmode="numeric">
+                    </div>
+                    <div class="settings-group">
+                        <label id="savingsLabel">Eigið fé</label>
+                        <input id="savingsInput" type="number" inputmode="numeric">
+                    </div>
+
+                    <div class="settings-group">
+                        <label id="ratioLabel">Hlutfall láns</label>
+                        <input id="ratioInput" type="number" inputmode="numeric">
+                    </div>
+
+                    <div class="settings-group">
+                        <label id="yearLabel">Ár fram í tímann</label>
+                        <input id="yearInput" type="number" inputmode="numeric">
+                    </div>
+
+                    <div class="settings-group">
+                        <label id="targetLabel">Markmið</label>
+                        <input id="targetInput" type="number" inputmode="numeric">
+                    </div>
                 </div>
-                <div class="settings-group">
-                    <label id="incomeLabel">Laun fyrir skatt</label>
-                    <input id="incomeInput" placeholder="600000" type="numeric"
-                        value="600000" min="0" max="3000000" step="10000"
-                        oninput="incomeChanged()">
-                </div>
-            </div>
-    </section>
-    <footer class="max-width">
+        </section>
+        <footer class="max-width">
 	<div class="footer-container">
 	<h3> Fjármál.is er smíðað af <a class="my-name" href="https://valdi.dev"> Valdimar Sverrissyni</a> </h3>
 	</div>
